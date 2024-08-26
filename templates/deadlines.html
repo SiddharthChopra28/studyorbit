@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dassi_Is_Easy</title>
+</head>
+
+<body>
+
+  <link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+  <style>
+    /* Add Deadline Section Styles */
+    .add-deadline-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2rem 0;
+    }
+
+    .add-deadline-container input[type="text"],
+    .add-deadline-container input[type="datetime-local"] {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+      font-size: 14px;
+      background-color: #f9f9f9;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .add-deadline-container input[type="text"]::placeholder,
+    .add-deadline-container input[type="datetime-local"]::placeholder {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .add-deadline-container input[type="text"]:focus,
+    .add-deadline-container input[type="datetime-local"]:focus {
+      border-color: #007bff;
+      box-shadow: inset 0 2px 4px rgba(0, 123, 255, 0.25);
+      background-color: #fff;
+    }
+
+    .add-deadline-container button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    .add-deadline-container button:hover {
+      background-color: #0056b3;
+    }
+
+    /* General Table Styles */
+
+    .deadline-table {
+      width: 95%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+
+    .deadline-table th,
+    .deadline-table td {
+      border: 1px solid #807d7d;
+      padding: 8px;
+    }
+
+    .deadline-table th {
+      background-color: #8bbaff;
+    }
+
+    .deadline-table td {
+      text-align: center;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background-color 0.3s;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+
+    #actions {
+      text-align: right;
+      max-width: 30%;
+    }
+
+    .remaining-time {
+      font-style: italic;
+      color: red;
+    }
+  </style>
+  <!-- HTML for navBar-->
+  <nav>
+    <ul class="nav-ul">
+      <div class="logo">
+        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+            alt="LOGO" /></a>
+      </div>
+      <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+      <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+      <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+
+      <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+      <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+    </ul>
+    <div class="RightNav">
+      <button onclick="toggleTheme()" class="theme">
+        <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png" alt="" />
+      </button>
+
+    </div>
+  </nav>
+
+  <h2 class="smallText centerAlign">Deadlines</h2>
+  <table class="deadline-table">
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>Date & Time</th>
+        <th>Time Remaining</th>
+        <th id="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="deadlineTableBody">
+      <!-- Deadline rows will be dynamically added here -->
+    </tbody>
+  </table>
+
+  <div class="add-deadline-container">
+    <input type="text" id="newEventInput" placeholder="Enter event...">
+    <input type="datetime-local" id="newDateTimeInput">
+    <button onclick="addDeadline()">Add Deadline</button>
+  </div>
+
+  <script>
+    function addDeadline() {
+      var eventInput = document.getElementById("newEventInput");
+      var dateTimeInput = document.getElementById("newDateTimeInput");
+      var eventText = eventInput.value.trim();
+      var dateTimeValue = dateTimeInput.value;
+
+      if (eventText === "" || dateTimeValue === "") {
+        alert("Please enter both event and date/time.");
+        return;
+      }
+
+      fetch('/add_deadline', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ event: eventText, datetime: dateTimeValue }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            var tableBody = document.getElementById("deadlineTableBody");
+            var newRow = document.createElement("tr");
+
+            var eventCell = document.createElement("td");
+            eventCell.textContent = eventText;
+            newRow.appendChild(eventCell);
+
+            var dateTimeCell = document.createElement("td");
+            dateTimeCell.textContent = dateTimeValue;
+            newRow.appendChild(dateTimeCell);
+
+            var remainingCell = document.createElement("td");
+            remainingCell.className = "remaining-time";
+            updateRemainingTime(dateTimeValue, remainingCell);
+            newRow.appendChild(remainingCell);
+
+            var actionsCell = document.createElement("td");
+            actionsCell.id = "actions";
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "delete-btn";
+            deleteButton.onclick = function () {
+              deleteDeadline(newRow, eventText);
+            };
+            actionsCell.appendChild(deleteButton);
+            newRow.appendChild(actionsCell);
+
+            tableBody.appendChild(newRow);
+
+            eventInput.value = "";
+            dateTimeInput.value = "";
+          }
+        });
+    }
+
+    function deleteDeadline(row, eventText) {
+  fetch('/delete_deadline', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ event: eventText }),  // Update the key to 'event'
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        row.parentNode.removeChild(row);
+      }
+    });
+}
+
+
+    function updateRemainingTime(dateTime, cell) {
+      var deadlineDate = new Date(dateTime);
+      var now = new Date();
+      var timeRemaining = deadlineDate - now;
+
+      if (timeRemaining < 0) {
+        cell.textContent = "Expired";
+        return;
+      }
+
+      var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+
+      cell.textContent = `${days}d ${hours}h ${minutes}m remaining`;
+
+      // Update every minute
+      setTimeout(() => updateRemainingTime(dateTime, cell), 60000);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch('/get_deadlines')
+        .then(response => response.json())
+        .then(deadlines => {
+          populateDeadlines(deadlines);
+        });
+    });
+
+    function populateDeadlines(deadlines) {
+      var tableBody = document.getElementById("deadlineTableBody");
+      tableBody.innerHTML = "";
+
+      deadlines.forEach(function (deadline) {
+        var newRow = document.createElement("tr");
+
+        var eventCell = document.createElement("td");
+        eventCell.textContent = deadline.event;
+        newRow.appendChild(eventCell);
+
+        var dateTimeCell = document.createElement("td");
+        dateTimeCell.textContent = deadline.datetime;
+        newRow.appendChild(dateTimeCell);
+
+        var remainingCell = document.createElement("td");
+        remainingCell.className = "remaining-time";
+        updateRemainingTime(deadline.datetime, remainingCell);
+        newRow.appendChild(remainingCell);
+
+        var actionsCell = document.createElement("td");
+        actionsCell.id = "actions";
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-btn";
+        deleteButton.onclick = function () {
+          deleteDeadline(newRow, deadline.event);
+        };
+        actionsCell.appendChild(deleteButton);
+        newRow.appendChild(actionsCell);
+
+        tableBody.appendChild(newRow);
+      });
+    }
+  </script>
+  <!-- <script src="{{ url_for('static', filename='js/=index.js') }}"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply the saved theme on page load
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+    });
+
+    function applyTheme(theme) {
+      const stylesheet = document.getElementById('stylesheet');
+      const buttonImg = document.querySelector('.themeImg');
+
+      if (theme === 'dark') {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+        buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+      } else {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+        buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+      }
+
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    }
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dassi_Is_Easy</title>
+  <link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+</head>
+
+<body>
+  <style>
+    /* Card Container Styling */
+    .cardCon {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Card Styling */
+    .phycard {
+      margin-top: 50px;
+      height: 70vh;
+      width: 45vh;
+      background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    /* Card Hover Effect */
+    .phycard:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Text Styling */
+    .smallText {
+      font-size: 2em;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  </style>
+
+  <!-- HTML for navBar-->
+  <nav>
+    <ul class="nav-ul">
+      <div class="logo">
+        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+            alt="LOGO" /></a>
+      </div>
+      <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+      <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+      <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+      <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+      <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+    </ul>
+    <div class="RightNav">
+      <button onclick="toggleTheme()" class="theme">
+        <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png" alt="" />
+      </button>
+    </div>
+  </nav>
+
+  <!-- Cards -->
+  <div class="cardCon">
+    <div class="phycard cardElectro"><a href="{{ url_for('electro') }}" class="smallText">Electrostatics</a></div>
+    <div class="phycard cardCOM"><a href="{{ url_for('com') }}" class="smallText">Center Of Mass</a></div>
+  </div>
+
+  <!-- <script src="{{ url_for('static', filename='js/=index.js') }}"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply the saved theme on page load
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+    });
+
+    function applyTheme(theme) {
+      const stylesheet = document.getElementById('stylesheet');
+      const buttonImg = document.querySelector('.themeImg');
+
+      if (theme === 'dark') {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+        buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+      } else {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+        buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+      }
+
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    }
+
+  </script>
+</body>
+
+</html>

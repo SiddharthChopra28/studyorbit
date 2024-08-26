@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dassi_Is_Easy</title>
+  <link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+</head>
+
+<body>
+  <style>
+    .cards {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5%;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 30%;
+      transform-style: preserve-3d;
+    }
+
+    .card .box {
+      position: relative;
+      width: 300px;
+      height: 400px;
+      margin: 40px;
+      background: #232323;
+      border-radius: 20px;
+      transform-style: preserve-3d;
+      overflow: visible;
+    }
+
+    .card .box .name {
+      position: absolute;
+      font-size: 3rem;
+      top: 95%;
+      left: 0;
+      text-align: center;
+      /* color: rgb(146, 1, 249); */
+      width: 100%;
+      transform-style: preserve-3d;
+      transform: translate3d(0, 0, 75px);
+      transition: 0.5s;
+      opacity: 1;
+      z-index: 10;
+    }
+
+    .card .box:hover .name {
+      opacity: 1;
+      top: 80%;
+    }
+
+    #physics {
+      background-image: url("https://png.pngtree.com/background/20211215/original/pngtree-physics-symbols-on-brown-paper-education-math-formula-background-picture-image_1457824.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    #chemistry {
+      background-image: url("https://w0.peakpx.com/wallpaper/942/533/HD-wallpaper-technology-physics-and-chemistry-chemistry.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    #maths {
+      background-image: url("https://wallpapers.com/images/high/mathematics-algebra-and-geometry-euttbljvxcssp6je.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+
+  <!-- HTML for navBar-->
+  <nav>
+    <ul class="nav-ul">
+      <div class="logo">
+        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+            alt="LOGO" /></a>
+      </div>
+      <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+      <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+      <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+
+      <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+      <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+    </ul>
+    <div class="RightNav">
+      <button onclick="toggleTheme()" class="theme">
+        <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png" alt="" />
+      </button>
+
+    </div>
+  </nav>
+
+
+  <h2 class="smallText centerAlign">Resources</h2>
+
+  <!-- The Tilt Cards -->
+  <div class="cards">
+    <div class="card">
+      <div class="box"
+        backgroud="https://rukminim2.flixcart.com/image/832/832/kx3l0nk0/shopsy-poster/x/k/n/medium-science-albert-einstein-formulas-mathematics-physics-original-imag9mtrfzcxhqr6.jpeg?q=70&crop=false"
+        id="physics" onclick="resourcePageOpen(this.id)">
+        <h2 class="name">Physics</h2>
+      </div>
+    </div>
+    <div class="card">
+      <div class="box" id="chemistry" onclick="resourcePageOpen(this.id)">
+        <h2 class="name">Chemistry</h2>
+      </div>
+    </div>
+    <div class="card">
+      <div class="box" id="maths" onclick="resourcePageOpen(this.id)">
+        <h2 class="name">Maths</h2>
+      </div>
+    </div>
+
+
+    <script>
+      var VanillaTilt = function () { "use strict"; class t { constructor(e, i = {}) { if (!(e instanceof Node)) throw "Can't initialize VanillaTilt because " + e + " is not a Node."; this.width = null, this.height = null, this.clientWidth = null, this.clientHeight = null, this.left = null, this.top = null, this.gammazero = null, this.betazero = null, this.lastgammazero = null, this.lastbetazero = null, this.transitionTimeout = null, this.updateCall = null, this.event = null, this.updateBind = this.update.bind(this), this.resetBind = this.reset.bind(this), this.element = e, this.settings = this.extendSettings(i), this.reverse = this.settings.reverse ? -1 : 1, this.glare = t.isSettingTrue(this.settings.glare), this.glarePrerender = t.isSettingTrue(this.settings["glare-prerender"]), this.fullPageListening = t.isSettingTrue(this.settings["full-page-listening"]), this.gyroscope = t.isSettingTrue(this.settings.gyroscope), this.gyroscopeSamples = this.settings.gyroscopeSamples, this.elementListener = this.getElementListener(), this.glare && this.prepareGlare(), this.fullPageListening && this.updateClientSize(), this.addEventListeners(), this.reset(), this.updateInitialPosition() } static isSettingTrue(t) { return "" === t || !0 === t || 1 === t } getElementListener() { if (this.fullPageListening) return window.document; if ("string" == typeof this.settings["mouse-event-element"]) { const t = document.querySelector(this.settings["mouse-event-element"]); if (t) return t } return this.settings["mouse-event-element"] instanceof Node ? this.settings["mouse-event-element"] : this.element } addEventListeners() { this.onMouseEnterBind = this.onMouseEnter.bind(this), this.onMouseMoveBind = this.onMouseMove.bind(this), this.onMouseLeaveBind = this.onMouseLeave.bind(this), this.onWindowResizeBind = this.onWindowResize.bind(this), this.onDeviceOrientationBind = this.onDeviceOrientation.bind(this), this.elementListener.addEventListener("mouseenter", this.onMouseEnterBind), this.elementListener.addEventListener("mouseleave", this.onMouseLeaveBind), this.elementListener.addEventListener("mousemove", this.onMouseMoveBind), (this.glare || this.fullPageListening) && window.addEventListener("resize", this.onWindowResizeBind), this.gyroscope && window.addEventListener("deviceorientation", this.onDeviceOrientationBind) } removeEventListeners() { this.elementListener.removeEventListener("mouseenter", this.onMouseEnterBind), this.elementListener.removeEventListener("mouseleave", this.onMouseLeaveBind), this.elementListener.removeEventListener("mousemove", this.onMouseMoveBind), this.gyroscope && window.removeEventListener("deviceorientation", this.onDeviceOrientationBind), (this.glare || this.fullPageListening) && window.removeEventListener("resize", this.onWindowResizeBind) } destroy() { clearTimeout(this.transitionTimeout), null !== this.updateCall && cancelAnimationFrame(this.updateCall), this.reset(), this.removeEventListeners(), this.element.vanillaTilt = null, delete this.element.vanillaTilt, this.element = null } onDeviceOrientation(t) { if (null === t.gamma || null === t.beta) return; this.updateElementPosition(), this.gyroscopeSamples > 0 && (this.lastgammazero = this.gammazero, this.lastbetazero = this.betazero, null === this.gammazero ? (this.gammazero = t.gamma, this.betazero = t.beta) : (this.gammazero = (t.gamma + this.lastgammazero) / 2, this.betazero = (t.beta + this.lastbetazero) / 2), this.gyroscopeSamples -= 1); const e = this.settings.gyroscopeMaxAngleX - this.settings.gyroscopeMinAngleX, i = this.settings.gyroscopeMaxAngleY - this.settings.gyroscopeMinAngleY, s = e / this.width, n = i / this.height, l = (t.gamma - (this.settings.gyroscopeMinAngleX + this.gammazero)) / s, a = (t.beta - (this.settings.gyroscopeMinAngleY + this.betazero)) / n; null !== this.updateCall && cancelAnimationFrame(this.updateCall), this.event = { clientX: l + this.left, clientY: a + this.top }, this.updateCall = requestAnimationFrame(this.updateBind) } onMouseEnter() { this.updateElementPosition(), this.element.style.willChange = "transform", this.setTransition() } onMouseMove(t) { null !== this.updateCall && cancelAnimationFrame(this.updateCall), this.event = t, this.updateCall = requestAnimationFrame(this.updateBind) } onMouseLeave() { this.setTransition(), this.settings.reset && requestAnimationFrame(this.resetBind) } reset() { this.event = { clientX: this.left + this.width / 2, clientY: this.top + this.height / 2 }, this.element && this.element.style && (this.element.style.transform = `perspective(${this.settings.perspective}px) ` + "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)"), this.resetGlare() } resetGlare() { this.glare && (this.glareElement.style.transform = "rotate(180deg) translate(-50%, -50%)", this.glareElement.style.opacity = "0") } updateInitialPosition() { if (0 === this.settings.startX && 0 === this.settings.startY) return; this.onMouseEnter(), this.fullPageListening ? this.event = { clientX: (this.settings.startX + this.settings.max) / (2 * this.settings.max) * this.clientWidth, clientY: (this.settings.startY + this.settings.max) / (2 * this.settings.max) * this.clientHeight } : this.event = { clientX: this.left + (this.settings.startX + this.settings.max) / (2 * this.settings.max) * this.width, clientY: this.top + (this.settings.startY + this.settings.max) / (2 * this.settings.max) * this.height }; let t = this.settings.scale; this.settings.scale = 1, this.update(), this.settings.scale = t, this.resetGlare() } getValues() { let t, e; return this.fullPageListening ? (t = this.event.clientX / this.clientWidth, e = this.event.clientY / this.clientHeight) : (t = (this.event.clientX - this.left) / this.width, e = (this.event.clientY - this.top) / this.height), t = Math.min(Math.max(t, 0), 1), e = Math.min(Math.max(e, 0), 1), { tiltX: (this.reverse * (this.settings.max - t * this.settings.max * 2)).toFixed(2), tiltY: (this.reverse * (e * this.settings.max * 2 - this.settings.max)).toFixed(2), percentageX: 100 * t, percentageY: 100 * e, angle: Math.atan2(this.event.clientX - (this.left + this.width / 2), -(this.event.clientY - (this.top + this.height / 2))) * (180 / Math.PI) } } updateElementPosition() { let t = this.element.getBoundingClientRect(); this.width = this.element.offsetWidth, this.height = this.element.offsetHeight, this.left = t.left, this.top = t.top } update() { let t = this.getValues(); this.element.style.transform = "perspective(" + this.settings.perspective + "px) rotateX(" + ("x" === this.settings.axis ? 0 : t.tiltY) + "deg) rotateY(" + ("y" === this.settings.axis ? 0 : t.tiltX) + "deg) scale3d(" + this.settings.scale + ", " + this.settings.scale + ", " + this.settings.scale + ")", this.glare && (this.glareElement.style.transform = `rotate(${t.angle}deg) translate(-50%, -50%)`, this.glareElement.style.opacity = `${t.percentageY * this.settings["max-glare"] / 100}`), this.element.dispatchEvent(new CustomEvent("tiltChange", { detail: t })), this.updateCall = null } prepareGlare() { if (!this.glarePrerender) { const t = document.createElement("div"); t.classList.add("js-tilt-glare"); const e = document.createElement("div"); e.classList.add("js-tilt-glare-inner"), t.appendChild(e), this.element.appendChild(t) } this.glareElementWrapper = this.element.querySelector(".js-tilt-glare"), this.glareElement = this.element.querySelector(".js-tilt-glare-inner"), this.glarePrerender || (Object.assign(this.glareElementWrapper.style, { position: "absolute", top: "0", left: "0", width: "100%", height: "100%", overflow: "hidden", "pointer-events": "none" }), Object.assign(this.glareElement.style, { position: "absolute", top: "50%", left: "50%", "pointer-events": "none", "background-image": "linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)", transform: "rotate(180deg) translate(-50%, -50%)", "transform-origin": "0% 0%", opacity: "0" }), this.updateGlareSize()) } updateGlareSize() { if (this.glare) { const t = 2 * (this.element.offsetWidth > this.element.offsetHeight ? this.element.offsetWidth : this.element.offsetHeight); Object.assign(this.glareElement.style, { width: `${t}px`, height: `${t}px` }) } } updateClientSize() { this.clientWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, this.clientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight } onWindowResize() { this.updateGlareSize(), this.updateClientSize() } setTransition() { clearTimeout(this.transitionTimeout), this.element.style.transition = this.settings.speed + "ms " + this.settings.easing, this.glare && (this.glareElement.style.transition = `opacity ${this.settings.speed}ms ${this.settings.easing}`), this.transitionTimeout = setTimeout(() => { this.element.style.transition = "", this.glare && (this.glareElement.style.transition = "") }, this.settings.speed) } extendSettings(t) { let e = { reverse: !1, max: 15, startX: 0, startY: 0, perspective: 1e3, easing: "cubic-bezier(.03,.98,.52,.99)", scale: 1, speed: 300, transition: !0, axis: null, glare: !1, "max-glare": 1, "glare-prerender": !1, "full-page-listening": !1, "mouse-event-element": null, reset: !0, gyroscope: !0, gyroscopeMinAngleX: -45, gyroscopeMaxAngleX: 45, gyroscopeMinAngleY: -45, gyroscopeMaxAngleY: 45, gyroscopeSamples: 10 }, i = {}; for (var s in e) if (s in t) i[s] = t[s]; else if (this.element.hasAttribute("data-tilt-" + s)) { let t = this.element.getAttribute("data-tilt-" + s); try { i[s] = JSON.parse(t) } catch (e) { i[s] = t } } else i[s] = e[s]; return i } static init(e, i) { e instanceof Node && (e = [e]), e instanceof NodeList && (e = [].slice.call(e)), e instanceof Array && e.forEach(e => { "vanillaTilt" in e || (e.vanillaTilt = new t(e, i)) }) } } return "undefined" != typeof document && (window.VanillaTilt = t, t.init(document.querySelectorAll("[data-tilt]"))), t }();
+    </script>
+    <script>
+      VanillaTilt.init(document.querySelectorAll(".box"), {
+        max: 18,
+        speed: 400
+      });
+      function resourcePageOpen(id) {
+        if (id == "physics") {
+          window.location.href = "{{ url_for('physics') }}"
+        }
+        else if (id == "chemistry") {
+          window.location.href = "{{ url_for('chemistry') }}"
+        }
+        else if (id == "maths") {
+          window.location.href = "{{ url_for('maths') }}"
+        }
+      }
+    </script>
+
+    <!-- <script src="{{ url_for('static', filename='js/=index.js') }}"></script> -->
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Apply the saved theme on page load
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme);
+      });
+
+      function applyTheme(theme) {
+        const stylesheet = document.getElementById('stylesheet');
+        const buttonImg = document.querySelector('.themeImg');
+
+        if (theme === 'dark') {
+          stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+          buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+        } else {
+          stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+          buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+        }
+
+        localStorage.setItem('theme', theme);
+      }
+
+      function toggleTheme() {
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+      }
+
+    </script>
+</body>
+
+</html>

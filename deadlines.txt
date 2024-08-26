@@ -1,0 +1,1 @@
+[{'event': 'Physics Exam', 'datetime': '2024-09-04T07:30'}, {'event': 'Maths Exam', 'datetime': '2024-09-05T07:30'}, {'event': 'CSE Practical', 'datetime': '2024-09-06T07:30'}, {'event': 'Sleep', 'datetime': '2026-12-12T12:00'}]

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dassi_Is_Easy</title>
+  <link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+</head>
+
+<body>
+  <!-- HTML for navBar-->
+  <nav>
+    <ul class="nav-ul">
+      <div class="logo">
+        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+            alt="LOGO" /></a>
+      </div>
+      <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+      <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+      <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+
+      <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+      <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+    </ul>
+    <div class="RightNav">
+      <button onclick="toggleTheme()" class="theme">
+        <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png" alt="" />
+      </button>
+
+    </div>
+  </nav>
+  <style>
+    .flashcards-section {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .flashcards-grid {
+      display: grid;
+      /* grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); 20rem is approximately 320px */
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      justify-content: center;
+      /* Center the grid items */
+    }
+
+    .flashcard {
+      position: relative;
+      background-color: #E8dfe0;
+      /* background: #E8DFEO; */
+      /* Light yellow background */
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      text-align: center;
+      width: 40vh;
+      /* Take full width of its grid cell */
+      height: 20vh;
+      overflow: hidden;
+    }
+
+    .flashcard-content {
+      font-size: 1.4rem;
+      word-wrap: break-word;
+      color: black;
+    }
+
+    .flashcard:hover {
+      height: 40vh;
+      box-shadow: 0 0 10px #cdc2c3;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: none;
+      border: none;
+      color: #ff4d4d;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: color 0.3s;
+      z-index: 10;
+    }
+
+    .delete-btn:hover {
+      color: #cc0000;
+    }
+
+    .input-container {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      max-width: 400px;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      color: black;
+    }
+
+    #charCount {
+      margin: 0.5rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    #submitBtn {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    #submitBtn:hover {
+      background-color: #218838;
+    }
+  </style>
+
+
+  <section class="flashcards-section">
+
+
+    <div class="flashcards-grid" id="flashcardsGrid">
+    </div>
+    <!-- Existing flashcards will be dynamically added here -->
+    </div>
+
+    <div class="input-container">
+      <input type="text" id="flashcardInput" maxlength="150" placeholder="Enter new flashcard text..."
+        oninput="updateCharCount()">
+      <p id="charCount">0/150</p>
+      <button id="submitBtn" onclick="addFlashcard()">Submit</button>
+    </div>
+  </section>
+
+  <script>
+    function updateCharCount() {
+      var input = document.getElementById("flashcardInput");
+      var charCount = document.getElementById("charCount");
+      var currentLength = input.value.length;
+      charCount.textContent = `${currentLength}/150`;
+    }
+
+    function deleteFlashcard(flashcard) {
+      var content = flashcard.querySelector('.flashcard-content').textContent;
+      fetch('/delete_flashcard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ flashcard: content }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            var flashcardsGrid = document.getElementById("flashcardsGrid");
+            flashcardsGrid.removeChild(flashcard);
+          }
+        });
+    }
+
+    function toggleSize(flashcard) {
+    }
+
+    function addFlashcard() {
+      var input = document.getElementById("flashcardInput");
+      var text = input.value.trim();
+
+      if (text === "") {
+        alert("Please enter some text for the flashcard.");
+        return;
+      }
+
+      fetch('/add_flashcard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: text }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            var flashcardsGrid = document.getElementById("flashcardsGrid");
+            var flashcardDiv = document.createElement("div");
+            flashcardDiv.className = "flashcard";
+            flashcardDiv.onclick = function () {
+              toggleSize(flashcardDiv);
+            };
+            var deleteButton = document.createElement("button");
+            deleteButton.className = "delete-btn";
+            deleteButton.textContent = "✖";
+            deleteButton.onclick = function (event) {
+              event.stopPropagation();
+              deleteFlashcard(flashcardDiv);
+            };
+
+            var contentDiv = document.createElement("div");
+            contentDiv.className = "flashcard-content";
+            contentDiv.textContent = text;
+
+            flashcardDiv.appendChild(deleteButton);
+            flashcardDiv.appendChild(contentDiv);
+            flashcardsGrid.appendChild(flashcardDiv);
+
+            input.value = "";
+            updateCharCount();
+          }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch('/get_flashcards')
+        .then(response => response.json())
+        .then(flashcards => {
+          var flashcardsGrid = document.getElementById("flashcardsGrid");
+          flashcardsGrid.innerHTML = ""; // Clear existing flashcards
+          flashcards.forEach(function (content) {
+            var flashcardDiv = document.createElement("div");
+            flashcardDiv.className = "flashcard";
+            flashcardDiv.onclick = function () {
+              toggleSize(flashcardDiv);
+            };
+            var deleteButton = document.createElement("button");
+            deleteButton.className = "delete-btn";
+            deleteButton.textContent = "✖";
+            deleteButton.onclick = function (event) {
+              event.stopPropagation();
+              deleteFlashcard(flashcardDiv);
+            };
+
+            var contentDiv = document.createElement("div");
+            contentDiv.className = "flashcard-content";
+            contentDiv.textContent = content;
+
+            flashcardDiv.appendChild(deleteButton);
+            flashcardDiv.appendChild(contentDiv);
+            flashcardsGrid.appendChild(flashcardDiv);
+          });
+        });
+    });
+  </script>
+  <!-- <script src="{{ url_for('static', filename='js/=index.js') }}"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply the saved theme on page load
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+    });
+
+    function applyTheme(theme) {
+      const stylesheet = document.getElementById('stylesheet');
+      const buttonImg = document.querySelector('.themeImg');
+
+      if (theme === 'dark') {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+        buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+      } else {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+        buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+      }
+
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    }
+
+  </script>
+</body>
+
+</html>

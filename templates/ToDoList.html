@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dassi_Is_Easy</title>
+  <link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+</head>
+
+<body>
+  <!-- HTML for navBar-->
+  <nav>
+    <ul class="nav-ul">
+      <div class="logo">
+        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+            alt="LOGO" /></a>
+      </div>
+      <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+      <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+      <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+      <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+      <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+    </ul>
+    <div class="RightNav">
+      <button onclick="toggleTheme()" class="theme">
+        <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png" alt="" />
+      </button>
+
+    </div>
+  </nav>
+  <style>
+    /* Basic styling for the table */
+    .task-table {
+      width: 180vh;
+      /* max-width: 600px; */
+      margin: 20px auto;
+      border-collapse: collapse;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .task-table th,
+    .task-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .task-table th {
+      background-color: rgb(25, 24, 24);
+      font-weight: bold;
+      color: white;
+    }
+
+    #actions {
+      width: 10%;
+      align-self: right;
+    }
+
+    .task-table td .delete-btn {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .task-table td .delete-btn:hover {
+      background-color: #cc0000;
+    }
+
+    .add-task-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+      width: 180vh;
+      /* max-width: 600px; */
+    }
+
+    .add-task-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      outline: none;
+      color: black;
+    }
+
+    .add-task-container button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .add-task-container button:hover {
+      background-color: #218838;
+    }
+  </style>
+
+
+  <h2 class="smallText centerAlign">To Do List</h2>
+
+
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th id='actions'>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="taskTableBody">
+      <!-- Rows will be dynamically added here -->
+    </tbody>
+  </table>
+
+  <div class="add-task-container">
+    <input type="text" id="newTaskInput" placeholder="Enter a new task...">
+    <button onclick="addTask()">Add Task</button>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      loadTasks();
+    });
+
+    function loadTasks() {
+      fetch('/get_tasks')
+        .then(response => response.json())
+        .then(data => {
+          const taskTableBody = document.getElementById("taskTableBody");
+          taskTableBody.innerHTML = ""; // Clear existing rows
+          data.tasks.forEach(task => {
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                    <td>${task}</td>
+                    <td id="actions">
+                        <button class="delete-btn" onclick="deleteTask(this)">Delete</button>
+                    </td>`;
+            taskTableBody.appendChild(newRow);
+          });
+        });
+    }
+
+    function addTask() {
+      var taskInput = document.getElementById("newTaskInput");
+      var taskText = taskInput.value.trim();
+
+      if (taskText === "") {
+        alert("Please enter a task.");
+        return;
+      }
+
+      fetch('/add_task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ task: taskText }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            loadTasks(); // Reload the task list
+            taskInput.value = "";
+          }
+        });
+    }
+
+    function deleteTask(button) {
+      var row = button.parentNode.parentNode;
+      var taskText = row.cells[0].textContent;
+
+      fetch('/delete_task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ task: taskText }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            loadTasks(); // Reload the task list
+          }
+        });
+    }
+
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply the saved theme on page load
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+    });
+
+    function applyTheme(theme) {
+      const stylesheet = document.getElementById('stylesheet');
+      const buttonImg = document.querySelector('.themeImg');
+
+      if (theme === 'dark') {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+        buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+      } else {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+        buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+      }
+
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    }
+
+  </script>
+  <!-- <script src="{{ url_for('static', filename='js/index.js') }}"></script> -->
+
+</body>
+
+</html>

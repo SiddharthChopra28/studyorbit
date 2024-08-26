@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dassi_Is_Easy</title>
+  <link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+</head>
+
+<body>
+  <!-- HTML for navBar-->
+  <nav>
+    <ul class="nav-ul">
+      <div class="logo">
+        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+            alt="LOGO" /></a>
+      </div>
+      <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+      <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+      <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+
+      <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+      <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+    </ul>
+    <div class="RightNav">
+      <button onclick="toggleTheme()" class="theme">
+        <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png" alt="" />
+      </button>
+
+    </div>
+  </nav>
+  
+    <div id="databox"></div>
+    <div id="instructions">Reload to see new answers<span onclick="location.reload()" style="cursor: pointer;"><img src="{{url_for('static', filename='refresh.svg')}}" alt="refresh"></span>
+    </div>
+    <div class="extraInfo">Enter your Expression in the BlackBoard. Press right click, then evaluate once done. After that, press the reload button just above, and wait for the result.</div>
+
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply the saved theme on page load
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+    });
+
+    function applyTheme(theme) {
+      const stylesheet = document.getElementById('stylesheet');
+      const buttonImg = document.querySelector('.themeImg');
+
+      if (theme === 'dark') {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+        buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+      } else {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+        buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+      }
+
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    }
+    
+
+    var fetch1 = "{{fetch}}";
+    console.log(fetch1);
+    if (fetch1 == 'true'){
+        console.log('yes')
+        document.getElementById("databox").innerHTML = "loading";
+        fetch('/fetch_resp')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response error');  
+            }
+            let x = response.text()
+            console.log(x)
+            return x
+
+        })
+        .then(data => {
+            console.log(data);
+            document.getElementById("databox").innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+    
+    }
+    else if (fetch == 'false'){
+        
+    }
+
+
+
+
+  </script>
+  <!-- <script src="{{ url_for('static', filename='js/=index.js') }}"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+
+</head>
+
+<body>
+  <nav>
+    <ul class="nav-ul">
+      <div class="logo">
+        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+            alt="LOGO" /></a>
+      </div>
+      <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+      <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+      <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+
+      <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+      <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+    </ul>
+    <div class="RightNav">
+      <button onclick="toggleTheme()" class="theme">
+        <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png" alt="" />
+      </button>
+
+    </div>
+  </nav>
+  <h2 class="smallText centerAlign">Physics Formulaes</h2>
+  <h1>Electrostatics</h1>
+  <div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search for reactions..."
+      onkeyup="filterTable()">
+  </div>
+  <table id="chemTable" class="chemTable">
+    <tr>
+      <th>Shape</th>
+      <th>Image</th>
+      <th>formula</th>
+    </tr>
+    <tr>
+      <td> General two point bodies</td>
+      <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOzJWoAJaad8Q-tk97JQY3V_IcPgaO-YxcEQ&amp;s"
+          class="sFlh5c FyHeAf" alt="Center of Mass" jsname="JuXqh"
+          style="max-width: 700px; width: 700px; height: 359px; margin: 0px;" data-ilt="1724570169976"></td>
+      <td>A system of two point masses m<sub>1</sub>r<sub>1</sub> = m<sub>2</sub>r<sub>2</sub>. The centre of mass lies
+        closer to the heavier mass.</td>
+    </tr>
+    <tr>
+      <td>Triangle</td>
+      <td><img src="https://www.careerride.com/images/Mechanical/Right-Angled-Triangle.png" jsaction=""
+          class="sFlh5c FyHeAf iPVvYb" style="max-width: 700px; height: 359px; margin: 0px; width: 700px;"
+          alt="Right angled triangle - Laminas not having centroid at its geometrical  centre" jsname="kn3ccd"
+          aria-hidden="false"></td>
+      <td>y<sub>c</sub>=h/3</td>
+    </tr>
+    <tr>
+      <td> A Semicircular disc</td>
+      <td><img src="https://search-static.byjusweb.com/question-images/aakash_pdf/99996115339-0-0" jsaction=""
+          class="sFlh5c FyHeAf iPVvYb" style="max-width: 708px; height: 359px; margin: 0px; width: 600px;"
+          alt="Find the centre of mass of a uniform semicircular disc of radius R" jsname="kn3ccd" aria-hidden="false">
+      </td>
+      <td>y<sub>c</sub>= 4r/3π</td>
+    </tr>
+    <tr>
+      <td>A Semicircular ring</td>
+      <td><img src="https://s3mn.mnimgs.com/img/shared/ck-files/ck_56963817adc5c.png" jsaction=""
+          class="sFlh5c FyHeAf iPVvYb" style="height: 359px; margin: 0px; width: 500px;"
+          alt="centre of mass of semicircular ring - Physics - - 9879724 | Meritnation.com" jsname="kn3ccd"
+          aria-hidden="false"></td>
+      <td>y<sub>c</sub>= 2r/π</td>
+    </tr>
+    <tr>
+      <td>Hemispherical Shell</td>
+      <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBTw8j4pqb6VMtNQRaEevJPtPhzlMpcmOJ9g&amp;s"
+          class="sFlh5c FyHeAf" alt="Centre of Mass and its Motion | Solved Problems" jsname="JuXqh"
+          style="max-width: 700px; height: 359px; margin: 0px; width: 600px;" data-ilt="1724571064882"></td>
+      <td>y<sub>c</sub>= r/2</td>
+    </tr>
+    <tr>
+      <td>Solid Hemisphere</td>
+      <td><img src="https://qph.cf2.quoracdn.net/main-qimg-f31bfa19540b2e5f045d0fe0f640d52a" jsaction=""
+          class="sFlh5c FyHeAf iPVvYb" style="max-width: 700px; height: 359px; margin: 0px; width: 600px;"
+          alt="From the base of a hemisphere a right cone of height r/2 and same base is  scooped out then centre of mass of remaining part is? - Quora"
+          jsname="kn3ccd" aria-hidden="false"></td>
+      <td>y<sub>c</sub> =3r/8</td>
+    </tr>
+    <tr>
+      <td>Solid Cone</td>
+      <td><img src="https://www.sarthaks.com/?qa=blob&amp;qa_blobid=1703102321453835930" jsaction=""
+          class="sFlh5c FyHeAf iPVvYb" style="max-width: 700px; height: 359px; margin: 0px; width: 600px;"
+          alt="Distance of the centre of mass of a solid uniform cone from its vertex is  z0. If the radius of its base - Sarthaks eConnect | Largest Online  Education Community"
+          jsname="kn3ccd" aria-hidden="false"></td>
+      <td>y<sub>c</sub> = h/4</td>
+    </tr>
+    <tr>
+      <td>Hollow Cone</td>
+      <td><img src="https://storage.googleapis.com/tb-img/production/20/03/F4_N.M_Madhu_12.03.20_D10.png" jsaction=""
+          class="sFlh5c FyHeAf iPVvYb" style="max-width: 700px; height: 359px; margin: 0px; width: 700px;"
+          alt="Solved] Centre of gravity of a thin hollow cone lines on the axis of" jsname="kn3ccd" aria-hidden="false"
+          width="700px" /></td>
+      <td>y<sub>c</sub> = h/3</td>
+    </tr>
+  </table>
+  <style>
+    .search-container {
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .search-input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      width: 50%;
+      max-width: 600px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      color: black;
+    }
+
+    .search-input:focus {
+      border-color: #007bff;
+      box-shadow: 0 2px 4px rgba(0, 123, 255, 0.25);
+      outline: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      font-size: 1.4rem;
+    }
+
+    th {
+      background-color: black;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+  <!-- <script src="{{ url_for('static', filename='js/=index.js') }}"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply the saved theme on page load
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+    });
+
+    function applyTheme(theme) {
+      const stylesheet = document.getElementById('stylesheet');
+      const buttonImg = document.querySelector('.themeImg');
+
+      if (theme === 'dark') {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+        buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+      } else {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+        buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+      }
+
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    }
+
+  </script>
+  <script>
+
+    function filterTable() {
+      // Get the value of the search input field
+      var input = document.getElementById('searchInput').value.toLowerCase();
+      var table = document.getElementById('chemTable');
+      var tr = table.getElementsByTagName('tr');
+
+      // Loop through all table rows, and hide those that don't match the search query
+      for (var i = 1; i < tr.length; i++) { // Start from 1 to skip header row
+        var td = tr[i].getElementsByTagName('td')[0]; // Get the cell in the second column
+        if (td) {
+          var txtValue = td.textContent || td.innerText;
+          if (txtValue.toLowerCase().includes(input)) {
+            tr[i].style.display = ''; // Show row
+          } else {
+            tr[i].style.display = 'none'; // Hide row
+          }
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

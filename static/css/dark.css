@@ -1,0 +1,353 @@
+/* =================== The Resets & Scroll=================== */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito Sans';
+  color: white;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+
+  background: #333230;
+}
+
+.bigText {
+  font-size: 3.5rem;
+}
+
+.smallText {
+  font-size: 2.8rem;
+}
+
+.smallerText {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  color: white;
+  background-color: #0d5f0d;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  width: 22%;
+  margin: 5px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: green;
+}
+
+.centerAlign {
+  text-align: center;
+}
+
+/* =================== The NavBar=================== */
+nav {
+  background-color: black;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  position: sticky;
+  top: 0;
+  margin-bottom: 1rem;
+  z-index: 10;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.nav-ul {
+  width: 70%;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.nav-li {
+  padding: 5px 20px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.nav-li a {
+  text-decoration: none;
+  color: white;
+  font-size: 28px;
+}
+
+.nav-li a:hover {
+  color: gray;
+}
+
+.nav-li a::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(212, 212, 212);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+a:hover::after {
+  transform: scaleX(1);
+}
+
+/* The Logo */
+
+.logo {
+  margin: 2px 0px;
+  /* margin-left: -50px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logo img {
+  height: 40px;
+  filter: invert(1);
+}
+
+/* The RightNav */
+.RightNav {
+  width: 30%;
+  text-align: right;
+}
+
+/* The Dark theme button */
+.theme {
+  background: none;
+  outline: none;
+  border: none;
+  width: 7%;
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.theme img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+/* =============== The Sections =============== */
+
+
+img {
+  vertical-align: middle;
+}
+
+.cardImg {
+  margin: 0 10px;
+}
+
+.cardImg img {
+  width: 100%;
+}
+
+/* The Section 7 (Grid) */
+
+.grid {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-areas: "grid-item grid-item grid-item";
+  margin: 30px 10px;
+}
+
+.grid-item {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  /* background-image: url("picture1.jpg"); */
+  background: url(../media/picture1.jpg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 10px;
+  height: 40vh;
+  position: relative;
+  text-wrap: wrap;
+
+}
+
+.grid-item p {
+  align-self: center;
+  margin: 0 2rem 0 2rem;
+  color: #000000;
+}
+
+.space {
+  padding: 3px;
+}
+
+/* Section 8 */
+
+.grid1 {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-areas: "grid-item grid-item grid-item grid-item";
+  grid-template-columns: repeat(4, 1fr);
+  margin: 30px 10px;
+}
+
+
+table {
+  width: 90%;
+  margin: 0 auto 0 auto;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.smallth {
+  width: 15%;
+}
+
+th {
+  background-color: #000000;
+}
+
+#addTaskBtn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 14px;
+  margin-left: 5%;
+}
+
+#addTaskBtn:hover {
+  background-color: #0056b3;
+}
+
+.deleteBtn {
+  background-color: #dc3545;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  /* position: relative; */
+  margin: auto auto auto 35px;
+}
+
+.deleteBtn:hover {
+  background-color: #c82333;
+}
+
+.saveBtn {
+  background-color: #28a745;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+}
+
+.saveBtn:hover {
+  background-color: #218838;
+  /* Darker shade for hover effect */
+}
+
+.taskInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #060606;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.taskInput::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+.taskInput:focus {
+  border-color: #007bff;
+  box-shadow: inset 0 2px 4px rgba(0, 123, 255, 0.25);
+  background-color: #fff;
+}
+
+
+.deadline-table th {
+  background-color: #000000;
+}
+
+#newDateTimeInput,
+#newEventInput {
+  color: black;
+}
+
+.chemTable td {
+  color: white;
+  background: rgb(106, 106, 106);
+  border: 2.25px solid black;
+}
+
+.chemTable td:nth-child(3) img {
+  display: block;
+  margin: 0 auto;
+}
+
+#instructions{
+    font-size: 2em;
+}
+#databox{
+    font-size: 2rem;
+}
+    /* Card-like styling for the a tag */
+    #launchAi {
+        display: block;
+        padding: 25vh 1vh;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        text-decoration: none;
+        color: #333;
+        font-size: 1.5rem;
+        font-weight: 500;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+    }
+
+    /* Hover effect */
+    #launchAi:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+    .aCont{
+        padding-top: 300px;
+        width: 35vh;
+        height: 50vh;
+        align-items: center;
+        align-content: center;
+        vertical-align: center;
+        margin:0 auto;
+    }
+
+.extraInfo{
+    font-size: 1.4rem;}

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+
+</head>
+
+<body>
+    <nav>
+        <ul class="nav-ul">
+            <div class="logo">
+                <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+                        alt="LOGO" /></a>
+            </div>
+            <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+            <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+            <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+
+            <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+            <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+        </ul>
+        <div class="RightNav">
+            <button onclick="toggleTheme()" class="theme">
+                <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png"
+                    alt="" />
+            </button>
+
+        </div>
+    </nav>
+    <h2 class="smallText centerAlign">Physics Formulaes</h2>
+    <h1>Electrostatics</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search for reactions..."
+            onkeyup="filterTable()">
+    </div>
+    <table id="chemTable" class="chemTable">
+        <tr>
+            <th>Name</th>
+            <th>Defination/Info</th>
+            <th>Formula</th>
+        </tr>
+        <tr>
+            <td>Coulomb's Law</td>
+            <td>Coulomb's Law describes the electrostatic force between two point charges. It is one of the foundational
+                principles of electrostatics </td>
+            <td>F = k * (|q<sub>1</sub> * q<sub>2</sub>|) / r<sup>2</sup><br><br>
+                Where:<br><br>
+
+                F is the magnitude of the electrostatic force.<br>
+                k is the electrostatic constant, approximately equal to 8.99 x 10^9 Nm^2/C^2.<br>
+                q1 and q2 are the magnitudes of the two point charges.<br>
+                r is the separation distance between the two charges.<br>
+            </td>
+        </tr>
+        <tr>
+            <td>Electric Field(E)</td>
+            <td>The electric field at a point in space is the force experienced by a unit positive test charge placed at
+                that point. </td>
+            <td>E = F / q
+                <br><br>
+                Where:
+                <br><br>
+                E is the electric field.<br>
+                F is the force acting on the test charge.<br>
+                q is the magnitude of the test charge.<br>
+            </td>
+        </tr>
+        <tr>
+            <td> Electric Potential</td>
+            <td>The electric potential at a point is the work done in bringing a unit positive charge from infinity to
+                that point.</td>
+            <td>V = k * (q / r)<br><br>
+
+                Where:<br><br>
+
+                V is the electric potential.<br>
+                k is the electrostatic constant.<br>
+                q is the magnitude of the point charge creating the potential.<br>
+                r is the distance from the point charge to the point where potential is calculated.<br></td>
+        </tr>
+        <tr>
+            <td>Electric Potential Energy (U)</td>
+            <td>The electric potential energy of a system of point charges is the work done in assembling those charges
+                from infinity.</td>
+            <td>U = k * (|q1 * q2|) / r<br><br>
+
+                Where:<br><br>
+
+                U is the electric potential energy.<br>
+                k is the electrostatic constant.<br>
+                q1 and q2 are the magnitudes of the two point charges.<br>
+                r is the separation distance between the two charges.<br></td>
+        </tr>
+        <tr>
+            <td>Gauss's Law</td>
+            <td>Gauss's Law relates the electric flux through a closed surface to the total charge contained within that
+                surface. </td>
+            <td>Φ = E * A = (q_enclosed) / ε₀<br><br>
+
+                Where:<br><br><br>
+
+                Φ is the electric flux through a closed surface.<br>
+                E is the electric field.<br>
+                A is the area of the closed surface.<br>
+                q_enclosed is the total charge enclosed by the surface.<br>
+                ε₀ is the permittivity of free space, approximately equal to 8.85 x 10^(-12) C^2/Nm^2.<br></td>
+        </tr>
+        <tr>
+            <td>Capacitance (C)</td>
+            <td>Capacitance measures the ability of a conductor to store electrical charge. </td>
+            <td>C = Q / V<br><br>
+
+                Where:<br><br>
+
+                C is the capacitance.<br>
+                Q is the charge stored on the conductor.<br>
+                V is the potential difference across the conductor.<br>
+            </td>
+        </tr>
+        <tr>
+            <td>Ohm's Law (for capacitors)</td>
+            <td>Ohm's Law for capacitors relates the current (I), voltage (V), and capacitance (C) in a charging or
+                discharging capacitor</td>
+            <td>I = C * dV/dt<br><br>
+
+                Where:<br><br>
+
+                I is the current.<br>
+                C is the capacitance.<br>
+                dV/dt is the rate of change of voltage with respect to time.<br></td>
+        </tr>
+        <tr>
+            <td>Energy Stored in a Capacitor (U)</td>
+            <td>he energy stored in a charged capacitor</td>
+            <td>U = (1/2) * C * V<sup>2</sup><br><br>
+
+                Where:<br><br>
+
+                U is the energy stored.<br>
+                C is the capacitance.<br>
+                V is the voltage across the capacitor.<br>
+            </td>
+        </tr>
+        <tr>
+            <td>Torque on a dipole placed in the electric field</td>
+            <td>The magnitude and direction of the rotatory force applied on the dipole</td>
+            <td><img
+                    src="https://lh3.googleusercontent.com/yTMnds3dZXiXf-DyQ9MTS2tQZgmdh6cRJ6enFY2ZPOfF-DOb885yotZYg6PfxLVc0ml9uP6c-XE7sdobCMo4BqdfD__l7x9TmMBuHyGPhU4Rap7VsbZUXBGVIAD90X9MSHC1sQt3c9D4CC5XSwiysbE"><br><br>
+
+                Where:<br><br>
+
+                p is value along with direction of dipole<br>
+                E is the value and direction of electric field<br>
+            </td>
+        </tr>
+        <tr>
+            <td>The Potential energy of a dipole</td>
+            <td>The value of potential energy of the dipole in an electric field</td>
+            <td><img
+                    src="https://lh5.googleusercontent.com/GxE-pF3MxitEowNZsX1kwS-JgsZuFuft6H0NwibeECKH9KwaAgzA27-9p0PWCN3QXkxtTJ167q7afAhcS249WJUBIpvcnadzrNUWKU_wz8nIzLwPd2Uort8HvVWC-8uwHIQw2yFJ6-xNSzsL4E-ifj8"><br><br>
+
+                Where:<br><br>
+
+                p is value along with direction of dipole<br>
+                E is the value and direction of electric field<br>
+            </td>
+        </tr>
+        <tr>
+            <td>Electric field due to a continuous charge distribution</td>
+            <td>his formula calculates the electric field (E) at a point in space due to a continuous charge
+                distribution, represented by the integral of infinitesimal charge elements (dq) over the distribution.
+            </td>
+            <td>Formula: E = (1 / 4πε₀) * ∫(dq) / r<sup>2</sup><br><br>
+
+                Where:<br><br>
+
+                p is value along with direction of dipole<br>
+                E is the value and direction of electric field<br>
+            </td>
+        </tr>
+    </table>
+    <style>
+        .search-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .search-input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 50%;
+            max-width: 600px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            color: black;
+        }
+
+        .search-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            font-size: 1.4rem;
+        }
+
+        th {
+            background-color: black;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+    <!-- <script src="{{ url_for('static', filename='js/=index.js') }}"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply the saved theme on page load
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+        });
+
+        function applyTheme(theme) {
+            const stylesheet = document.getElementById('stylesheet');
+            const buttonImg = document.querySelector('.themeImg');
+
+            if (theme === 'dark') {
+                stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+                buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+            } else {
+                stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+                buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+            }
+
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        }
+
+    </script>
+    <script>
+
+        function filterTable() {
+            // Get the value of the search input field
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var table = document.getElementById('chemTable');
+            var tr = table.getElementsByTagName('tr');
+
+            // Loop through all table rows, and hide those that don't match the search query
+            for (var i = 1; i < tr.length; i++) { // Start from 1 to skip header row
+                var td = tr[i].getElementsByTagName('td')[0]; // Get the cell in the second column
+                if (td) {
+                    var txtValue = td.textContent || td.innerText;
+                    if (txtValue.toLowerCase().includes(input)) {
+                        tr[i].style.display = ''; // Show row
+                    } else {
+                        tr[i].style.display = 'none'; // Hide row
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

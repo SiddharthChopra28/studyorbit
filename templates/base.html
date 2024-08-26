@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dassi_Is_Easy</title>
+  <link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+</head>
+<style>
+  .slider-container {
+    position: relative;
+    width: 120vh;
+    /* Set width based on viewport height */
+    height: 60vh;
+    /* Adjust height to maintain 2:1 aspect ratio */
+    max-width: 100%;
+    /* Ensure it does not exceed viewport width */
+    max-height: 100vh;
+    /* Ensure it does not exceed viewport height */
+    margin: auto;
+    overflow: hidden;
+    border-radius: 10px;
+    background: none;
+    /* Optional background color */
+  }
+
+  .slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+    /* Ensure slider takes full height of the container */
+  }
+
+  .slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    background: none;
+    /* Change this color to any vibrant color you prefer */
+    color: black;
+    padding: 20px;
+    text-align: center;
+    font-size: 3.3em;
+    /* Increase font size for larger slides */
+    flex: 1 0 100%;
+    height: 100%;
+    /* Ensure each slide takes full height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .slideBtn {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  .prev {
+    left: 20px;
+  }
+
+  .next {
+    right: 20px;
+  }
+
+  .slideBtn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .cont {
+    background: url("https://www.herzing.edu/sites/default/files/styles/fp_640_288/public/2020-04/Online%20Tools.png.webp?itok=4mFj5rWH");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    padding: 100px;
+    width: 90%;
+    border-radius: 5px;
+
+  }
+
+  h2 {
+    color: rgb(48, 128, 104);
+  }
+</style>
+
+<body>
+  <!-- HTML for navBar-->
+  <nav>
+    <ul class="nav-ul">
+      <div class="logo">
+        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+            alt="LOGO" /></a>
+      </div>
+      <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+      <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+      <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+
+      <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+      <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+    </ul>
+    <div class="RightNav">
+      <button onclick="toggleTheme()" class="theme">
+        <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png" alt="" />
+      </button>
+
+    </div>
+  </nav>
+  <h2 class="centerAlign" style="font-size: 6rem; color: #63befc;">Study Orbit</h2><br><br>
+  <h2 class="centerAlign" style="font-size: 2rem;">
+    Tired of Googling for answers? <br>
+    Tired of word framing your questions to ask ChatGPT? <br>
+    Tired of switching apps to decide what to do next? <br>
+    We provide everything you need… At one place! <br><br>
+  </h2>
+  <div class="cont">
+
+
+
+    <div class="slider-container">
+      <div class="slider">
+        <div class="slide">Welcome to Our Website!</div>
+        <div class="slide">Explore Our Features</div>
+        <div class="slide">To Do List</div>
+        <div class="slide">Deadlines</div>
+        <div class="slide">Resources for various Subjects</div>
+        <div class="slide">Flashcards</div>
+        <div class="slide">AI canvas</div>
+      </div>
+      <button class="prev slideBtn" onclick="prevSlide()">&#10094;</button>
+      <button class="next slideBtn" onclick="nextSlide()">&#10095;</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply the saved theme on page load
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+    });
+
+    function applyTheme(theme) {
+      const stylesheet = document.getElementById('stylesheet');
+      const buttonImg = document.querySelector('.themeImg');
+
+      if (theme === 'dark') {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+        buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+      } else {
+        stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+        buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+      }
+
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    }
+
+  </script>
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+      const slider = document.querySelector('.slider');
+      slider.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      showSlide(currentIndex);
+    }
+
+    function startAutoSlide() {
+      setInterval(nextSlide, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      startAutoSlide();
+    });
+
+  </script>
+
+  <!-- <script src ="{{ url_for('static', filename='js/index.js') }}"></script> -->
+</body>
+
+</html>

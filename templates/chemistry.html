@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html>
+
+<title>
+    Named Reactions Table
+</title>
+
+<head>
+</head>
+
+<link id="stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" />
+
+<body>
+    <!-- HTML for navBar-->
+    <nav>
+        <ul class="nav-ul">
+            <div class="logo">
+                <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='media/picture1.jpg') }}"
+                        alt="LOGO" /></a>
+            </div>
+            <li class="nav-li"><a href="{{ url_for('todolist') }}">To Do List</a></li>
+            <li class="nav-li"><a href="{{ url_for('deadlines') }}">Deadlines</a></li>
+            <li class="nav-li"><a href="{{ url_for('resources') }}">Resources</a></li>
+
+            <li class="nav-li"><a href="{{ url_for('flashcards') }}">Flashcards</a></li>
+            <li class="nav-li"><a href="{{ url_for('aicanvas') }}">AiCanvas</a></li>
+        </ul>
+        <div class="RightNav">
+            <button onclick="toggleTheme()" class="theme">
+                <img class="themeImg" src="https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png"
+                    alt="" />
+            </button>
+
+        </div>
+    </nav>
+    <h2 class="smallText centerAlign">Chemistry Reactions</h2>
+
+    <br>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search for reactions..."
+            onkeyup="filterTable()">
+    </div>
+    <table class="chemTable" id="chemTable" style="margin-left: auto; margin-right: auto;">
+        <tr bgcolor="lightgrey">
+            <th>S.No.</th>
+            <th>Name of Reaction</th>
+            <th>Reaction image</th>
+        </tr>
+        <tr bgcolor="white">
+            <td>1.</td>
+            <td>Aldol Condensation</td>
+            <td><img src="{{ url_for('static', filename='media/Aldol condensation.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>2.</td>
+            <td>Cannizaro Reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Cannizaro reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>3.</td>
+            <td>Carbylamine Reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Carbylamine reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>4.</td>
+            <td>Clemmensen Reduction</td>
+            <td><img src="{{ url_for('static', filename='media/Clemmensen Reduction.png')}}" height="75"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>5.</td>
+            <td>Coupling reaction</td>
+            <td><img src="{{ url_for('static', filename='media/coupling reaction.png')}}" height="300" width="600"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>6.</td>
+            <td>Cross-Aldol Condensation</td>
+            <td><img src="{{ url_for('static', filename='media/Cross-Aldol Condensation.png')}}" height="300"
+                    width=" 600"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>7.</td>
+            <td>Etard reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Etard reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>8.</td>
+            <td>Fehling's test</td>
+            <td><img src="{{ url_for('static', filename='media/Fehlings test.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>9.</td>
+            <td>Finkelstein reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Finkelstein reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>10.</td>
+            <td>Fittig reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Fittig reaction.png')}}" height="100"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>11.</td>
+            <td>Friedel-Craft's reaction</td>
+            <TD><img src="{{ url_for('static', filename='media/Friedel-Crafts reaction.png')}}" height="200"
+                    width="500"></TD>
+        </tr>
+        <tr bgcolor="white">
+            <td>12.</td>
+            <td>Gabriel-Pthalimide synthesis</td>
+            <td><img src="{{ url_for('static', filename='media/Gabriel-Pthalimide synthesis.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>13.</td>
+            <td>Gatterman reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Gatterman reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>14.</td>
+            <td>Gatterman-Koch reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Gatterman-Koch reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>15.</td>
+            <td>Haloform reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Haloform reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>16.</td>
+            <td>Hoffmann bromamide degradation</td>
+            <td><img src="{{ url_for('static', filename='media/Hoffmann bromamide degradation.png')}}" height="100">
+            </td>
+        </tr>
+        <tr bgcolor="white">
+            <td>17.</td>
+            <td>HVZ reaction</td>
+            <td><img src="{{ url_for('static', filename='media/HVZ reaction.png')}}" height="150"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>18.</td>
+            <td>Hydroboration Oxidation</td>
+            <td><img src="{{ url_for('static', filename='media/Hydroboration-Oxidation.png')}}" height="300"
+                    width="600"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>19.</td>
+            <td>Kolbe's reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Kolbes reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>20.</td>
+            <td>Reimer-Teimann reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Reimer-Tiemann reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>21.</td>
+            <td>Rosenmund Reduction</td>
+            <td><img src="{{ url_for('static', filename='media/Rosenmund reduction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>22.</td>
+            <td>Sandmeyer's reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Sandmeyer reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>23.</td>
+            <td>Stephen reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Stephen reaction.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>24.</td>
+            <td>Swart's reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Swarts reaction.png')}}" height="150"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>25.</td>
+            <td>Tollen's test</td>
+            <td><img src="{{ url_for('static', filename='media/Tollens test.png')}}" height="200"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>26.</td>
+            <td>Williamson Synthesis</td>
+            <td><img src="{{ url_for('static', filename='media/Williamson Synthesis.png')}}" height="350" width="600">
+            </td>
+        </tr>
+        <tr bgcolor="white">
+            <td>27.</td>
+            <td>Wolff-Kishner reduction</td>
+            <td><img src="{{ url_for('static', filename='media/Wolff-Kishner reduction.png')}}" height="100"></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>28.</td>
+            <td>Wurtz-Fittig reaction</td>
+            <td><img src="{{ url_for('static', filename='media/Wurtz-Fittig reaction.png')}}" height="150"></td>
+        </tr>
+
+
+    </table>
+
+
+    <style>
+        .search-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .search-input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 50%;
+            max-width: 600px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            color: black;
+        }
+
+        .search-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            font-size: 1.4rem;
+        }
+
+        th {
+            background-color: black;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+    <!-- <script src="{{ url_for('static', filename='js/=index.js') }}"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply the saved theme on page load
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+        });
+
+        function applyTheme(theme) {
+            const stylesheet = document.getElementById('stylesheet');
+            const buttonImg = document.querySelector('.themeImg');
+
+            if (theme === 'dark') {
+                stylesheet.setAttribute('href', "{{ url_for('static', filename='css/dark.css') }}");
+                buttonImg.setAttribute('src', 'http://simpleicon.com/wp-content/uploads/light.svg');
+            } else {
+                stylesheet.setAttribute('href', "{{ url_for('static', filename='css/light.css') }}");
+                buttonImg.setAttribute('src', 'https://cdn.iconscout.com/icon/free/png-256/night-mode-2-475098.png');
+            }
+
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        }
+
+    </script>
+    <script>
+
+        function filterTable() {
+            // Get the value of the search input field
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var table = document.getElementById('chemTable');
+            var tr = table.getElementsByTagName('tr');
+
+            // Loop through all table rows, and hide those that don't match the search query
+            for (var i = 1; i < tr.length; i++) { // Start from 1 to skip header row
+                var td = tr[i].getElementsByTagName('td')[1]; // Get the cell in the second column
+                if (td) {
+                    var txtValue = td.textContent || td.innerText;
+                    if (txtValue.toLowerCase().includes(input)) {
+                        tr[i].style.display = ''; // Show row
+                    } else {
+                        tr[i].style.display = 'none'; // Hide row
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
